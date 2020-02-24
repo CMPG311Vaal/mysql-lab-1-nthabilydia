@@ -1,0 +1,336 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.5.16 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2011, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database BidvestBank;
+ERROR 1007 (HY000): Can't create database 'bidvestbank'; database exists
+mysql> use BidvestBank;
+Database changed
+mysql> create table BankBranch(
+    -> branch_name varchar(200) not null primary key,
+    -> branch_city varchar(200),
+    -> assets char(100)
+    -> );
+ERROR 1050 (42S01): Table 'bankbranch' already exists
+mysql> "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqld.exe" "--defaults-file=C:\ProgramData\MySQL\MySQL Server 8.0\my.ini"
+    -> \c
+mysql> desc BankBranch;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| branch_name | varchar(10) | NO   | PRI | NULL    |       |
+| branch_city | varchar(10) | YES  |     | NULL    |       |
+| assets      | varchar(10) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (4.24 sec)
+
+mysql> alter table BankBranch modify branch_name varchar(200),
+    -> modify branch_city varchar(200),
+    -> modify assets char(100);
+Query OK, 0 rows affected (1.49 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Customer;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| customer_name   | varchar(10) | NO   | PRI | NULL    |       |
+| customer_street | varchar(10) | YES  |     | NULL    |       |
+| customer_city   | varchar(10) | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+3 rows in set (0.69 sec)
+
+mysql> alter table Customer modify customer_name varchar(200),
+    -> modify customer_street varchar(200),
+    -> modify customer_city varchar(200);
+Query OK, 0 rows affected (1.40 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc CustomerAccount;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| account_name | char(5)     | NO   | PRI | NULL    |       |
+| branch_name  | varchar(10) | YES  |     | NULL    |       |
+| balance      | double      | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.44 sec)
+
+mysql> alter table CustomerAccount modify account_name char(100),
+    -> modify branch_name varchar(200);
+Query OK, 0 rows affected (0.75 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Loan;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| loan_number | char(5)     | NO   | PRI | NULL    |       |
+| branch_name | varchar(10) | YES  |     | NULL    |       |
+| amount      | double      | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.65 sec)
+
+mysql> alter table Loan modify branch_name varchar(200);
+Query OK, 0 rows affected (0.37 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Depositor;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| customer_name | varchar(10) | YES  |     | NULL    |       |
+| account_name  | char(5)     | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+2 rows in set (0.66 sec)
+
+mysql> alter table Depositor modify customer_name varchar(200),
+    -> modify account_name char(100);
+Query OK, 0 rows affected (0.39 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Borrower;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| customer_name | varchar(10) | YES  |     | NULL    |       |
+| loan_number   | char(5)     | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+2 rows in set (0.33 sec)
+
+mysql> alter table Borrower modify customer-name varchar(200);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-name varchar(200)' at line 1
+mysql> alter table Borrower modify customer_name varchar(200);
+Query OK, 0 rows affected (0.42 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Employee;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| employee_name | varchar(10) | NO   | PRI | NULL    |       |
+| branch_name   | varchar(10) | YES  |     | NULL    |       |
+| salary        | double      | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (1.55 sec)
+
+mysql> alter table Employee modify branch_name varchar(200);
+Query OK, 0 rows affected (0.53 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Employee;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| employee_name | varchar(10)  | NO   | PRI | NULL    |       |
+| branch_name   | varchar(200) | YES  |     | NULL    |       |
+| salary        | double       | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+3 rows in set (0.11 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| bidvestbank        |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+5 rows in set (0.52 sec)
+
+mysql> use BidvestBank;
+Database changed
+mysql> insert into CustomerAccount values('A-5324','Newtown',500),
+    -> ('A-5624','Sunnyside',400),
+    -> ('A-7794','Midrand',900),
+    -> ('A-4467','Mabopane',700),
+    -> ('A-3546','Midrand',750),
+    -> ('A-3453','Universitas',700),
+    -> ('A-2542','Mamelodi',350);
+Query OK, 7 rows affected (1.35 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> insert into BankBranch values('Midrand','Johannesburg',7100000),
+    -> ('Newtown','Johannesburg',9000000),
+    -> ('Mabopane','Pretoria',400000),
+    -> ('Belgravia','Kimberly',3700000),
+    -> ('Sunnyside','Pretoria',1700000),
+    -> ('Amanzimtoti','Durban',300000),
+    -> ('Unversitas','Bloemfontein',2100000),
+    -> ('Mamelodi','Pretoria',8000000);
+Query OK, 8 rows affected (0.47 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> use BidvestBank;
+Database changed
+mysql> insert into Depositor values('Johnson','A-5624'),
+    -> ('Johnson','A-5624'),
+    -> ('Johnson','A-7794'),
+    -> ('Zwane','A-3546'),
+    -> ('Lindsay','A-3453'),
+    -> ('Smith','A-4467'),
+    -> ('Dlamini','A-2542');
+Query OK, 7 rows affected (0.63 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> insert into Loan values('L-11','Mamelodi',900),
+    -> ('L-14','Newtown',1500),
+    -> ('L-15','Sunnyside',1500),
+    -> ('L-16','Sunnyside',1300),
+    -> ('L-17','Newtown',1000),
+    -> ('L-23','Unversitas',2000),
+    -> ('L-93','Mabopane',500);
+Query OK, 7 rows affected (0.44 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> insert into Borrower values('Modise','L-16'),
+    -> ('Jooste','L-93'),
+    -> ('Johnson','L-15'),
+    -> ('Jackson','L-14'),
+    -> ('Zwane','L-17'),
+    -> ('Smith','L-11'),
+    -> ('Smith','L-23'),
+    -> ('Williams','L-17');
+Query OK, 8 rows affected (1.05 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> insert into Employee values('Modise','Sunnyside',1500),
+    -> ('Brown','Sunnyside',1300),
+    -> ('Gopal','Sunnyside',5300),
+    -> ('Johnson','Newtown',1500),
+    -> ('Loreena','Newtown',1300),
+    -> ('Peter','Newtown',2500),
+    -> ('Rao','Austin',1500),
+    -> ('Sato','Austin',1600);
+Query OK, 8 rows affected (0.20 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from CustomerAccount where balance < 700;
++--------------+-------------+---------+
+| account_name | branch_name | balance |
++--------------+-------------+---------+
+| A-2542       | Mamelodi    |     350 |
+| A-5324       | Newtown     |     500 |
+| A-5624       | Sunnyside   |     400 |
++--------------+-------------+---------+
+3 rows in set (1.57 sec)
+
+mysql> select * from Customer where customer_name = 'Johannesburg';
+Empty set (0.14 sec)
+
+mysql> select * from Customer where customer_city = 'Johannesburg';
++---------------+-----------------+---------------+
+| customer_name | customer_street | customer_city |
++---------------+-----------------+---------------+
+| Brooks        | Senator         | Johannesburg  |
++---------------+-----------------+---------------+
+1 row in set (0.01 sec)
+
+mysql> select * from Empoyee where salary > 1500
+    -> and branch_name != 'Newtown';
+ERROR 1146 (42S02): Table 'bidvestbank.empoyee' doesn't exist
+mysql> select * from Employee where salary > 1500
+    -> and branch_name != 'Newtown';
++---------------+-------------+--------+
+| employee_name | branch_name | salary |
++---------------+-------------+--------+
+| Gopal         | Sunnyside   |   5300 |
+| Sato          | Austin      |   1600 |
++---------------+-------------+--------+
+2 rows in set (0.08 sec)
+
+mysql> select avg(salary) from Employee;
++-------------+
+| avg(salary) |
++-------------+
+|      2062.5 |
++-------------+
+1 row in set (0.09 sec)
+
+mysql> select * from BankBranch order by -assets limit 1
+    -> ;
++-------------+--------------+---------+
+| branch_name | branch_city  | assets  |
++-------------+--------------+---------+
+| Newtown     | Johannesburg | 9000000 |
++-------------+--------------+---------+
+1 row in set (0.22 sec)
+
+mysql> select * from Employee where branch_name = 'Sunnyside';
++---------------+-------------+--------+
+| employee_name | branch_name | salary |
++---------------+-------------+--------+
+| Brown         | Sunnyside   |   1300 |
+| Gopal         | Sunnyside   |   5300 |
+| Modise        | Sunnyside   |   1500 |
++---------------+-------------+--------+
+3 rows in set (0.06 sec)
+
+mysql> desc Borrower;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| customer_name | varchar(200) | YES  |     | NULL    |       |
+| loan_number   | char(5)      | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+2 rows in set (1.70 sec)
+
+mysql> select * CustomerAccount where balance > 900;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CustomerAccount where balance > 900' at line 1
+mysql> select * from CustomerAccount where balance > 900;
+Empty set (0.07 sec)
+
+mysql> select * from CustomerAccount where branch_name = 'Newtown'
+    -> and balance > 600;
+Empty set (0.00 sec)
+
+mysql> desc BankBranch;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| branch_name | varchar(200) | NO   | PRI |         |       |
+| branch_city | varchar(200) | YES  |     | NULL    |       |
+| assets      | char(100)    | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+3 rows in set (0.23 sec)
+
+mysql> select * from Borrower;
++---------------+-------------+
+| customer_name | loan_number |
++---------------+-------------+
+| Modise        | L-16        |
+| Jooste        | L-93        |
+| Johnson       | L-15        |
+| Jackson       | L-14        |
+| Zwane         | L-17        |
+| Smith         | L-11        |
+| Smith         | L-23        |
+| Williams      | L-17        |
++---------------+-------------+
+8 rows in set (0.04 sec)
+
+mysql> select * from BankBranch;
++-------------+--------------+---------+
+| branch_name | branch_city  | assets  |
++-------------+--------------+---------+
+| Amanzimtoti | Durban       | 300000  |
+| Belgravia   | Kimberly     | 3700000 |
+| Mabopane    | Pretoria     | 400000  |
+| Mamelodi    | Pretoria     | 8000000 |
+| Midrand     | Johannesburg | 7100000 |
+| Newtown     | Johannesburg | 9000000 |
+| Sunnyside   | Pretoria     | 1700000 |
+| Unversitas  | Bloemfontein | 2100000 |
++-------------+--------------+---------+
+8 rows in set (0.00 sec)
